@@ -6,6 +6,11 @@ public static partial class ObservableExtensions
     {
         return new Switch<T>(sources);
     }
+
+    public static Observable<TResult> Switch<TSource, TResult>(this Observable<TSource> source, Func<TSource, Observable<TResult>> selector)
+    {
+        return new Switch<TResult>(source.Select(selector));
+    }
 }
 
 internal sealed class Switch<T>(Observable<Observable<T>> sources) : Observable<T>
